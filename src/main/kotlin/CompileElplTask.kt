@@ -44,17 +44,18 @@ abstract class CompileElplTask @Inject constructor(
         val binDir = binExtractionDir.get().asFile
         binDir.mkdirs()
 
-        // 🔥 1. Check if you have a local development version of the compiler right in your workspace
-        // (Adjust this path to point directly to where your compiler project builds its fat jar, e.g., build/libs/elpl-compiler.jar)
-        val localDevJar = File(projectDir.get().asFile.parentFile, "elpl-compiler/build/libs/elpl-compiler.jar")
+        // 🔥 Point directly to your actual local compiler build folder using an absolute path
+        val localDevJar = File("/Users/apple/Projects/ELPL 2/build/libs/elpl-compiler.jar")
 
         val compilerJarFile: File
 
         if (localDevJar.exists()) {
             // Development Mode: Use your freshly compiled local jar instantly!
             compilerJarFile = localDevJar
-            // Optional: println("=== ELPL: Using local development compiler jar ===")
+            println("✅ ELPL: Using LOCAL development compiler jar from -> ${localDevJar.absolutePath}")
         } else {
+            println("⚠️ ELPL: Local dev jar not found at ${localDevJar.absolutePath}, falling back to cache...")
+
             // Production/Global Fallback Mode: Use the global cache & GitHub download
             val userHome = File(System.getProperty("user.home"))
             val globalCacheDir = File(userHome, ".elpl/cache")
@@ -65,17 +66,15 @@ abstract class CompileElplTask @Inject constructor(
             compilerJarFile = File(globalCacheDir, "elpl-compiler.jar")
 
             if (!compilerJarFile.exists()) {
-                println("=== ELPL: Downloading compiler binary from GitHub Releases (one-time global setup) ===")
+                println("=== ELPL: Downloading compiler binary from GitHub Releases ===")
                 val downloadUrl = URL("https://github.com/mujtabaishaq5/elpl-gradle-plugin/releases/download/v1.0.12/elpl-compiler.jar")
                 downloadUrl.openStream().use { input ->
                     compilerJarFile.outputStream().use { output ->
                         input.copyTo(output)
                     }
                 }
-                println("=== ELPL: Global compiler binary cached successfully ===")
             }
         }
-
         val sdkDir = androidSdkDir.get()
         val sdkVersion = compileSdk.get()
 
