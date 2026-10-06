@@ -66,7 +66,7 @@ abstract class CompileElplTask @Inject constructor(
 
             if (!compilerJarFile.exists()) {
                 println("=== ELPL: Downloading compiler binary from GitHub Releases ===")
-                val downloadUrl = URL("https://github.com/mujtabaishaq5/elpl-gradle-plugin/releases/download/v1.0.12/elpl-compiler.jar")
+                val downloadUrl = URL("https://github.com/mujtabaishaq5/elpl-gradle-plugin/releases/download/v1.0.13/elpl-compiler.jar")
                 downloadUrl.openStream().use { input ->
                     compilerJarFile.outputStream().use { output ->
                         input.copyTo(output)
