@@ -1,7 +1,7 @@
 plugins {
     `kotlin-dsl`
     `java-gradle-plugin`
-    `maven-publish`
+    id("com.gradle.plugin-publish") version "2.2.1"
 }
 
 group = "com.syedm.elpl"
@@ -13,28 +13,21 @@ repositories {
 }
 
 gradlePlugin {
+    // Required metadata for the Portal
+    website.set("https://github.com/mujtabaishaq5/elpl-gradle-plugin")
+    vcsUrl.set("https://github.com/mujtabaishaq5/elpl-gradle-plugin.git")
+
     plugins {
         create("elplAndroidPlugin") {
             id = "com.syedm.elpl.android"
             implementationClass = "com.syedm.elpl.gradle.ElplAndroidPlugin"
+            displayName = "ELPL Android Plugin"
+            description = "Embeds and runs the ELPL compiler natively inside Android builds"
+            tags.set(listOf("elpl", "compiler", "android", "language"))
         }
     }
 }
 
 dependencies {
     compileOnly("com.android.tools.build:gradle:8.2.0")
-}
-
-// 🔥 Configure publishing to GitHub Packages
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/mujtabaishaq5/elpl-gradle-plugin/")
-            credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
 }

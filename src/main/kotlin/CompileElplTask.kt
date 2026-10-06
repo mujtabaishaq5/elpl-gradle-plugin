@@ -44,18 +44,25 @@ abstract class CompileElplTask @Inject constructor(
         val binDir = binExtractionDir.get().asFile
         binDir.mkdirs()
 
-        val compilerJarFile = File(binDir, "elpl-compiler.jar")
+        // 🔥 Store the compiler globally in the user's home directory so it never gets wiped and is shared across all projects
+        val userHome = File(System.getProperty("user.home"))
+        val globalCacheDir = File(userHome, ".elpl/cache")
+        if (!globalCacheDir.exists()) {
+            globalCacheDir.mkdirs()
+        }
 
-        // 🔥 Auto-download the compiler jar from GitHub Releases if not already cached locally
+        val compilerJarFile = File(globalCacheDir, "elpl-compiler.jar")
+
+// 🔥 Auto-download the compiler jar from GitHub Releases only if it doesn't exist globally yet
         if (!compilerJarFile.exists()) {
-            println("=== ELPL: Downloading compiler binary from GitHub Releases (first-time setup) ===")
+            println("=== ELPL: Downloading 105MB compiler binary from GitHub Releases (one-time global setup) ===")
             val downloadUrl = URL("https://github.com/mujtabaishaq5/elpl-gradle-plugin/releases/download/v1.0.10/elpl-compiler.jar")
             downloadUrl.openStream().use { input ->
                 compilerJarFile.outputStream().use { output ->
                     input.copyTo(output)
                 }
             }
-            println("=== ELPL: Compiler binary downloaded successfully ===")
+            println("=== ELPL: Global compiler binary cached successfully ===")
         }
 
         val sdkDir = androidSdkDir.get()
