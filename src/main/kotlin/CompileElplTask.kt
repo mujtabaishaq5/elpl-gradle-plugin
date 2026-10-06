@@ -56,7 +56,7 @@ abstract class CompileElplTask @Inject constructor(
 // 🔥 Auto-download the compiler jar from GitHub Releases only if it doesn't exist globally yet
         if (!compilerJarFile.exists()) {
             println("=== ELPL: Downloading 105MB compiler binary from GitHub Releases (one-time global setup) ===")
-            val downloadUrl = URL("https://github.com/mujtabaishaq5/elpl-gradle-plugin/releases/download/v1.0.11/elpl-compiler.jar")
+            val downloadUrl = URL("https://github.com/mujtabaishaq5/elpl-gradle-plugin/releases/download/v1.0.12/elpl-compiler.jar")
             downloadUrl.openStream().use { input ->
                 compilerJarFile.outputStream().use { output ->
                     input.copyTo(output)
