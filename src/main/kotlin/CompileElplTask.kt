@@ -44,9 +44,8 @@ abstract class CompileElplTask @Inject constructor(
         val binDir = binExtractionDir.get().asFile
         binDir.mkdirs()
 
-        // 🔥 Point directly to your actual local compiler build folder using an absolute path
-        val localDevJar = File("/Users/apple/Projects/ELPL 2/build/libs/elpl-compiler.jar")
-
+        // 🔥 Point straight to your local compiler jar at the project root
+        val localDevJar = File("/Users/apple/Projects/ELPL 2/elpl-compiler.jar")
         val compilerJarFile: File
 
         if (localDevJar.exists()) {
