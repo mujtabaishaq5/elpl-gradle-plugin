@@ -4,7 +4,7 @@ plugins {
     id("com.gradle.plugin-publish") version "2.2.1"
 }
 
-group = "com.syedm.elpl"
+group = "io.github.mujtabaishaq5"
 version = "1.0.13"
 
 repositories {
@@ -19,7 +19,7 @@ gradlePlugin {
 
     plugins {
         create("elplAndroidPlugin") {
-            id = "com.syedm.elpl.android"
+            id = "io.github.mujtabaishaq5.elpl"
             implementationClass = "com.syedm.elpl.gradle.ElplAndroidPlugin"
             displayName = "ELPL Android Plugin"
             description = "Embeds and runs the ELPL compiler natively inside Android builds"
