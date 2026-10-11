@@ -41,6 +41,24 @@ class ElplAndroidPlugin : Plugin<Project> {
 
                     compileSdk.set(dynamicCompileSdk)
 
+                    // =====================================================================
+// 🔥 ADD THIS: Extract the true Android namespace for the R class
+// =====================================================================
+                    val dynamicNamespace = try {
+                        val method = androidExt?.javaClass?.methods?.firstOrNull { it.name == "getNamespace" }
+                        method?.invoke(androidExt)?.toString()
+                    } catch (e: Exception) {
+                        null
+                    }
+
+                    if (dynamicNamespace != null) {
+                        baseAppPackage.set(dynamicNamespace)
+                    } else {
+                        // Fallback to applicationId if namespace isn't explicitly declared
+                        baseAppPackage.set(variant.applicationId)
+                    }
+// =====================================================================
+
                     val localProps = project.rootProject.file("local.properties")
                     val sdkDir = if (localProps.exists()) {
                         val props = Properties()

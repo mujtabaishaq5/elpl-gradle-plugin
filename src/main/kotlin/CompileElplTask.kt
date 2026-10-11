@@ -35,6 +35,10 @@ abstract class CompileElplTask @Inject constructor(
     @get:InputFiles
     abstract val dependencyClasspath: ConfigurableFileCollection
 
+    @get:Input
+    @get:Optional
+    abstract val baseAppPackage: Property<String>
+
     @TaskAction
     fun execute() {
         val outDir = outputDir.get().asFile
@@ -66,7 +70,7 @@ abstract class CompileElplTask @Inject constructor(
 
             if (!compilerJarFile.exists()) {
                 println("=== ELPL: Downloading compiler binary from GitHub Releases ===")
-                val downloadUrl = URL("https://github.com/mujtabaishaq5/elpl-gradle-plugin/releases/download/v1.0.13/elpl-compiler.jar")
+                val downloadUrl = URL("https://github.com/mujtabaishaq5/elpl-gradle-plugin/releases/download/v1.0.14/elpl-compiler.jar")
                 downloadUrl.openStream().use { input ->
                     compilerJarFile.outputStream().use { output ->
                         input.copyTo(output)
@@ -112,16 +116,27 @@ abstract class CompileElplTask @Inject constructor(
 
         val jvmClassPath = "$compilerJar${File.pathSeparator}$fullClasspath"
 
+        // Replace your current execOperations.exec { ... } block with this:
         execOperations.exec {
             workingDir = projectDir.get().asFile
 
-            commandLine(
+            val args = mutableListOf(
                 "java", "-cp", jvmClassPath, "syed.Main",
                 "build",
                 "--classpath", fullClasspath,
-                "-o", outDir.absolutePath,
-                sourceDir.get().asFile.absolutePath
+                "-o", outDir.absolutePath
             )
+
+            // 🔥 Inject the dynamic package name if it was successfully found
+            if (baseAppPackage.isPresent && baseAppPackage.get().isNotBlank()) {
+                args.add("--base-package")
+                args.add(baseAppPackage.get())
+            }
+
+            // Add the source directory last
+            args.add(sourceDir.get().asFile.absolutePath)
+
+            commandLine(args)
 
             standardOutput = System.out
             errorOutput = System.err
