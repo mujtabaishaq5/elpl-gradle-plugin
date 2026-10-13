@@ -1,6 +1,6 @@
 # ELPL Android Gradle Plugin
 
-[![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fplugins.gradle.org%2Fmaven2%2Fio%2Fgithub%2Fmujtabaishaq5%2Felpl%2Fio.github.mujtabaishaq5.elpl.gradle.plugin%2Fmaven-metadata.xml\&label=Gradle%20Plugin)](https://plugins.gradle.org/plugin/io.github.mujtabaishaq5.elpl)
+[![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fplugins.gradle.org%2Fmaven2%2Fio%2Fgithub%2Fmujtabaishaq5%2Felpl%2Fio.github.mujtabaishaq5.elpl.gradle.plugin%2Fmaven-metadata.xml\&label=Gradle%20Plugin)]([https://plugins.gradle.org/plugin/io.github.mujtabaishaq5.elpl](https://plugins.gradle.org/plugin/io.github.mujtabaishaq5.elpl))
 
 The **ELPL Android Gradle Plugin** integrates the [ELPL (English Like Programming Language)](https://elpl-d8625.web.app/) compiler into the standard Android build pipeline, enabling developers to write Android application source code in `.elpl` files and compile it as part of their existing Gradle projects.
 
