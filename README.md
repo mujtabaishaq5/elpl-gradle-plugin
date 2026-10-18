@@ -46,7 +46,7 @@ Add the plugin to your Android application module's `build.gradle.kts` file usin
 ```kotlin
 plugins {
     id("com.android.application")
-    id("io.github.mujtabaishaq5.elpl") version "1.0.13"
+    id("io.github.mujtabaishaq5.elpl") version "1.0.13" // New version available (1.0.14)
 }
 ```
 
