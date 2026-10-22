@@ -57,13 +57,12 @@ In your Android application module's `build.gradle.kts` file, add the ELPL plugi
 ```kotlin
 plugins {
     id("com.android.application")
-    id("io.github.mujtabaishaq5.elpl") version "1.0.14"
+    id("io.github.mujtabaishaq5.elpl") version "1.0.16"
 }
 ```
 
 **Always use the latest published version.** Check the automatically updating version badge at the top of this README or visit the [ELPL Android Gradle Plugin page on the Gradle Plugin Portal](https://plugins.gradle.org/plugin/io.github.mujtabaishaq5.elpl).
 
-Replace `1.0.14` with the latest available version when a newer release is published.
 
 ### 2. Add your ELPL source files
 
